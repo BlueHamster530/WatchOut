@@ -6,7 +6,14 @@ public class CameraController : MonoBehaviour
 {
     [SerializeField]
     private float ShakeAmount = 0.4f;
+    [SerializeField]
+    private float ShakeAngleAmount = 45.0f;
     private float ShakeTime;
+    [SerializeField]
+    private float testanglespeedgo = 2.0f;
+    [SerializeField]
+    private float testanglespeedback = 1.0f;
+    private bool istest = false;
     Vector3 initalPosition;
 
     float InitalProjectionSize;
@@ -25,9 +32,28 @@ public class CameraController : MonoBehaviour
     Camera Cam;
 
     MultipleCamera multiCam;
+
+
+    int _IsLeft;
+    float _TargetAngle;
+    Vector3 _OriginCamAngle;
+    Vector3 _TargetCamAngle;
+    float _CurrnetTime = 0;
+    int _type = 0;
+
     public void VivrateForTime(float _time)
     {
         ShakeTime = _time;
+        if (istest == false)
+        {
+            _IsLeft = Random.Range(0, 2);
+            _TargetAngle = ((float)(_IsLeft) - 0.5f) * 2.0f * ShakeAngleAmount;
+            _OriginCamAngle = Cam.transform.eulerAngles;
+            _TargetCamAngle = new Vector3(0, 0, _TargetAngle);
+            _CurrnetTime = 0;
+            _type = 0;
+            istest = true;
+        }
     }
     // Start is called before the first frame update
     void Start()
@@ -52,7 +78,8 @@ public class CameraController : MonoBehaviour
         {
             multiCam.CamShowFour();
         }
-
+        if (istest == true)
+            ChangeCamShakeAngle();
     }
     public void CloseUpForTime(float StartortSize, float TartgetortSize, float _time=1.0f, float returnTime = 0.0f)
     {
@@ -64,6 +91,26 @@ public class CameraController : MonoBehaviour
         OrtreturnTime = returnTime;
         IsOrtSizeChanged = true;
         CurrentOrtTime = 0.0f;
+    }
+    private void ChangeCamShakeAngle()
+    {
+        if (_type == 0)
+        {
+            _CurrnetTime += Time.deltaTime * testanglespeedgo;
+            Cam.transform.eulerAngles = Vector3.Lerp(_OriginCamAngle, _TargetCamAngle, _CurrnetTime);
+            if (_CurrnetTime >= 1.0f)
+                _type = 1;
+        }
+        if (_type == 1)
+        {
+            _CurrnetTime -= Time.deltaTime * testanglespeedback;
+            Cam.transform.eulerAngles = Vector3.Lerp(_OriginCamAngle, _TargetCamAngle, _CurrnetTime);
+            if (_CurrnetTime <= 0.0f)
+            {
+                _type = 0;
+                istest = false;
+            }
+        }
     }
 
     // Update is called once per frame
