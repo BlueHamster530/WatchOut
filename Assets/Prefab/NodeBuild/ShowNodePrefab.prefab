@@ -94,10 +94,10 @@ GameObject:
   m_Component:
   - component: {fileID: 5998437276134967707}
   - component: {fileID: 5998437276134967706}
-  - component: {fileID: 5998437276134967705}
   - component: {fileID: 5994135294594418380}
+  - component: {fileID: 4431245823120600090}
   m_Layer: 0
-  m_Name: NodePrefab
+  m_Name: ShowNodePrefab
   m_TagString: EmptyTile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -171,31 +171,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &5998437276134967705
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5998437276134967704}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c3c1170c221ecf745aa9f7ec5ab1febb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  nodetype: 0
-  TypeImage:
-  - {fileID: 0}
-  - {fileID: 21300000, guid: 0840141558a968d47bed38ff12fc17e0, type: 3}
-  - {fileID: 21300000, guid: 6901f3b450ba4564bb6f41b8838457fd, type: 3}
-  - {fileID: 21300000, guid: 75d77a9f170fd1f4dacbb50bd5f93b13, type: 3}
-  - {fileID: 21300000, guid: f4539097b9bb0cf4bada9883d68f9593, type: 3}
-  - {fileID: 21300000, guid: 4387409a5f8e6034db2bf6c726079d6d, type: 3}
-  - {fileID: 21300000, guid: 94a7031624db63b4c884159d9b13de7e, type: 3}
-  PosX: 0
-  PosY: 0
-  direction: 0
-  DirectionCheck: {fileID: 517932777077132797}
 --- !u!61 &5994135294594418380
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -222,3 +197,23 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.9, y: 0.9}
   m_EdgeRadius: 0
+--- !u!114 &4431245823120600090
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5998437276134967704}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c19cbaba15e45394ab523ba4927087b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  images:
+  - {fileID: 0}
+  - {fileID: 21300000, guid: 0840141558a968d47bed38ff12fc17e0, type: 3}
+  - {fileID: 21300000, guid: 6901f3b450ba4564bb6f41b8838457fd, type: 3}
+  - {fileID: 21300000, guid: 75d77a9f170fd1f4dacbb50bd5f93b13, type: 3}
+  - {fileID: 21300000, guid: f4539097b9bb0cf4bada9883d68f9593, type: 3}
+  - {fileID: 21300000, guid: 4387409a5f8e6034db2bf6c726079d6d, type: 3}
+  - {fileID: 21300000, guid: 94a7031624db63b4c884159d9b13de7e, type: 3}

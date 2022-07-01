@@ -6,6 +6,7 @@ TagManager:
   tags:
   - MapTile
   - EnemyTile
+  - EmptyTile
   layers:
   - Default
   - TransparentFX

@@ -49,26 +49,20 @@ public class cPlayerController : MonoBehaviour
     {
         movement2D = GetComponent<cMovement2D>();
         NowXPos = Mathf.Clamp(NowXPos, 1, 8);
-        NowYPos = Mathf.Clamp(NowXPos, 1, 9);
-        transform.position = cGameManager.instance.WorldTilePosition[NowXPos, NowYPos];
+        NowYPos = Mathf.Clamp(NowXPos, 1, 8);
         isMulSpeed = false;
-        vWayPoint[0] = cGameManager.instance.WorldTilePosition[1, 8];
-        vWayPoint[1] = cGameManager.instance.WorldTilePosition[8, 8];
-        vWayPoint[2] = cGameManager.instance.WorldTilePosition[8, 1];
-        vWayPoint[3] = cGameManager.instance.WorldTilePosition[1, 1];
+         transform.position = cGameManager.instance.WorldTilePosition[NowXPos, NowYPos];
+         vWayPoint[0] = cGameManager.instance.WorldTilePosition[1, 8];
+         vWayPoint[1] = cGameManager.instance.WorldTilePosition[8, 8];
+         vWayPoint[2] = cGameManager.instance.WorldTilePosition[8, 1];
+         vWayPoint[3] = cGameManager.instance.WorldTilePosition[1, 1];
     }
     public void PlayerSetMoveToTime(float _time)
     {
         if (_time <= cGameManager.instance.CurrnetPlayTime) return;
-
         isMulSpeed = true;
         GoToTime = _time;
         Time.timeScale = 10;
-        //float nowPosition = _time * fPlayerSpeed * 0.1f;
-        //print(nowPosition);
-        //nCurrentWay = (int)(nowPosition % 4.0f);
-        //print(nCurrentWay);
-        //nCurrentMoveTime = (nowPosition % 1.0f);
     }
     private void SetmoveToTimSpeedup()
     {
@@ -102,12 +96,6 @@ public class cPlayerController : MonoBehaviour
             transform.position = vWayPoint[nCurrentWay];
            nCurrentMoveTime = 0;
         }
-        
-        //switch (nCurrentWay)
-        //{
-        //    case 0:
-        //        break;
-        //}
     }
     private void FixedUpdate()
     {
@@ -218,50 +206,6 @@ public class cPlayerController : MonoBehaviour
         //    cGameManager.instance.ChangeScene("SampleScene");
         //}
     }
-
-    private void GetMoveMent(Vector3Int value)
-    {
-        if (movement2D.IsMove) return;
-     
-        if (value.x != 0)
-        {
-            while (true)
-            {
-                if ((NowXPos + value.x) >= cGameManager.MapSize-1)
-                {
-                    value.x -= 1;
-                    continue;
-                }
-                if ((NowXPos + value.x) < 1)
-                {
-                    value.x += 1;
-                    continue;
-                }
-                break;
-            }
-        }
-        else if (value.y != 0)
-        {
-            while (true)
-            {
-                if ((NowYPos + value.y) >= cGameManager.MapSize-1)
-                {
-                    value.y -= 1;
-                    continue;
-                }
-                if ((NowYPos + value.y) < 1)
-                {
-                    value.y += 1;
-                    continue;
-                }
-                break;
-            }
-        }
-        NowXPos += value.x;
-        NowYPos += value.y;
-        movement2D.MoveDirection = new Vector3Int(NowXPos,NowYPos);
-    }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("EnemyTile"))
@@ -304,14 +248,6 @@ public class cPlayerController : MonoBehaviour
         {
             nearEnemyTile[0] = null;
         }
-
     }
-    //private void OnTriggerExit2D(Collider2D collision)
-    //{
-    //    if (collision.CompareTag("EnemyTile"))
-    //    {
-    //        SubEnemyTileInCode();
-    //    }
-    //}
 
 }

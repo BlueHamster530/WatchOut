@@ -66,11 +66,9 @@ public class cNoteLabs : MonoBehaviour
 
     [SerializeField]
     TMP_InputField GoToTime;
-
     
     public int WhatIGetOn = 0;
     cNodeBuild[] nodebuildcodes = new cNodeBuild[100];
-
     private void Start()
     {
         for (int i = 0; i < 100000; i++)
@@ -81,7 +79,7 @@ public class cNoteLabs : MonoBehaviour
         {
             for (int ii = 0; ii < 10; ii++)
             {
-                WorldTilePosition[i, ii] = new Vector3(-4.785f + (i * 1.085f), -5.3f + (ii * 1.085f), 0);
+                WorldTilePosition[i, ii] = new Vector3(-4.345f + (i * 0.965f), -4.345f + (ii * 0.965f), 0);
                GameObject clone = Instantiate(TilePrefab, WorldTilePosition[i, ii], Quaternion.identity);
                 clone.transform.parent = GameObject.Find("NodeTiles").transform;
                 nodebuildcodes[(i*10)+ii] = clone.GetComponent<cNodeBuild>();
@@ -207,17 +205,36 @@ public class cNoteLabs : MonoBehaviour
         MusicCurrntPlayTime = Mathf.FloorToInt(audio.time * 100);
         holyshit[MusicCurrntPlayTime].Nodes = new NodeInfo[100];
         holyshit[MusicCurrntPlayTime].IsActiveInfo = 0;
-        for (int i = 0; i < 100; i++)//맵사이즈변경시 x*y로 조건 변경
+        for (int i = 0; i < 100; i++)//맵사이즈변경시 (x*10+)y로 조건 변경
         {
             holyshit[MusicCurrntPlayTime].Nodes[i] = new NodeInfo(nodebuildcodes[i].nodetype, nodebuildcodes[i].PosX, nodebuildcodes[i].PosY, nodebuildcodes[i].direction);
             if(nodebuildcodes[i].nodetype>=1)
                 holyshit[MusicCurrntPlayTime].IsActiveInfo = 1;
         }
     }
+    public void SaveNodeInPlay()
+    {
+        MusicCurrntPlayTime = Mathf.FloorToInt(audio.time * 100);
+        //MusicCurrntPlayTime -= 200;
+        if (MusicCurrntPlayTime <= 0)
+            MusicCurrntPlayTime = 0;
+        holyshit[MusicCurrntPlayTime].Nodes = new NodeInfo[100];
+        holyshit[MusicCurrntPlayTime].IsActiveInfo = 0;
+        for (int i = 0; i < 100; i++)//맵사이즈변경시 (x*10+)y로 조건 변경
+        {
+            holyshit[MusicCurrntPlayTime].Nodes[i] = new NodeInfo(nodebuildcodes[i].nodetype, nodebuildcodes[i].PosX, nodebuildcodes[i].PosY, nodebuildcodes[i].direction);
+        }
+        holyshit[MusicCurrntPlayTime].IsActiveInfo = 1;
+        //int musictime = Mathf.FloorToInt(audio.time * 100);
+        //if(holyshit[musictime].IsActiveInfo == 0)
+        //    holyshit[musictime].IsActiveInfo = 1;
+        //holyshit[musictime].Nodes[(_x*10)+ _y] = 
+        //    new NodeInfo(_type,_x, _y,0);
+    }
     public void LoadNodes()
     {
         MusicCurrntPlayTime = Mathf.FloorToInt(audio.time * 100);
-        for (int i = 0; i < holyshit[MusicCurrntPlayTime].Nodes.Length; i++)//맵사이즈변경시 x*y로 조건 변경
+        for (int i = 0; i < holyshit[MusicCurrntPlayTime].Nodes.Length; i++)//맵사이즈변경시 (x*10+)y로 조건 변경
         {
             nodebuildcodes[i].SetNodeInfo(holyshit[MusicCurrntPlayTime].Nodes[i].nodeType, holyshit[MusicCurrntPlayTime].Nodes[i].dir);
         }
@@ -287,10 +304,14 @@ public class cNoteLabs : MonoBehaviour
             return;
         }
         MusicCurrntPlayTime = Mathf.Clamp(i,0,(int)((audio.maxDistance)*100.0f)+1);
+        if (holyshit[MusicCurrntPlayTime].IsActiveInfo == 0)
+        {
+            MusicCurrntPlayTime += 1;
+        }
         audio.time = MusicCurrntPlayTime/100.0f;
         LoadNodes();
     }
-    public void MusicSaveNQuit()
+    public void MusicSaveNChangeScene(string NextScene)
     {
         SaveNodes();
         MusicNodeData newNodeData = new MusicNodeData();
@@ -329,7 +350,7 @@ public class cNoteLabs : MonoBehaviour
         }
         NodeDataContoller.Instance._GamenodeData = newNodeData;
         NodeDataContoller.Instance.SaveData(newNodeData);
-        SceneManager.LoadScene("NodeBuildMain");
+        SceneManager.LoadScene(NextScene);
        
     }
     public void MusicLoad()
@@ -361,48 +382,45 @@ public class cNoteLabs : MonoBehaviour
         }
     }
 
-    public void MusicSaveNPlay()
-    {
-        SaveNodes();
-        MusicNodeData newNodeData = new MusicNodeData();
-        List<NodeSaveInfo> tempNodeSaveInfo = new List<NodeSaveInfo>();
-        for (int i = 0; i < holyshit.Length; i++)
-        {
-            if (holyshit[i].IsActiveInfo == 1)
-            {
-                List<NodeData> tempNodeData = new List<NodeData>();
-                for (int ii = 0; ii < holyshit[i].Nodes.Length; ii++)
-                {
-                    if (holyshit[i].Nodes[ii].nodeType != 0)
-                    {
-                        NodeData newJsonNodeData = new NodeData();
-                        newJsonNodeData._nodetype = holyshit[i].Nodes[ii].nodeType;
-                        newJsonNodeData._x = holyshit[i].Nodes[ii].x;
-                        newJsonNodeData._y = holyshit[i].Nodes[ii].y;
-                        newJsonNodeData._dir = holyshit[i].Nodes[ii].dir;
-                        tempNodeData.Add(newJsonNodeData);
-                    }
-                }
-                NodeSaveInfo newnodesaveinfo = new NodeSaveInfo();
-                newnodesaveinfo._Time = i;
-                newnodesaveinfo._Nodes = new NodeData[tempNodeData.Count];
-                for (int ii = 0; ii < tempNodeData.Count; ii++)
-                {
-                    newnodesaveinfo._Nodes[ii] = tempNodeData[ii];
-                }
-                tempNodeSaveInfo.Add(newnodesaveinfo);
-            }
-        }
-        newNodeData._NodesSave = new NodeSaveInfo[tempNodeSaveInfo.Count];
-        for (int i = 0; i < newNodeData._NodesSave.Length; i++)
-        {
-            newNodeData._NodesSave[i] = tempNodeSaveInfo[i];
-        }
-        NodeDataContoller.Instance._GamenodeData = newNodeData;
-        NodeDataContoller.Instance.SaveData(newNodeData);
-        SceneManager.LoadScene("GameStage");
-
-    }
-
-
+    //public void MusicSaveNPlay()
+    //{
+    //    SaveNodes();
+    //    MusicNodeData newNodeData = new MusicNodeData();
+    //    List<NodeSaveInfo> tempNodeSaveInfo = new List<NodeSaveInfo>();
+    //    for (int i = 0; i < holyshit.Length; i++)
+    //    {
+    //        if (holyshit[i].IsActiveInfo == 1)
+    //        {
+    //            List<NodeData> tempNodeData = new List<NodeData>();
+    //            for (int ii = 0; ii < holyshit[i].Nodes.Length; ii++)
+    //            {
+    //                if (holyshit[i].Nodes[ii].nodeType != 0)
+    //                {
+    //                    NodeData newJsonNodeData = new NodeData();
+    //                    newJsonNodeData._nodetype = holyshit[i].Nodes[ii].nodeType;
+    //                    newJsonNodeData._x = holyshit[i].Nodes[ii].x;
+    //                    newJsonNodeData._y = holyshit[i].Nodes[ii].y;
+    //                    newJsonNodeData._dir = holyshit[i].Nodes[ii].dir;
+    //                    tempNodeData.Add(newJsonNodeData);
+    //                }
+    //            }
+    //            NodeSaveInfo newnodesaveinfo = new NodeSaveInfo();
+    //            newnodesaveinfo._Time = i;
+    //            newnodesaveinfo._Nodes = new NodeData[tempNodeData.Count];
+    //            for (int ii = 0; ii < tempNodeData.Count; ii++)
+    //            {
+    //                newnodesaveinfo._Nodes[ii] = tempNodeData[ii];
+    //            }
+    //            tempNodeSaveInfo.Add(newnodesaveinfo);
+    //        }
+    //    }
+    //    newNodeData._NodesSave = new NodeSaveInfo[tempNodeSaveInfo.Count];
+    //    for (int i = 0; i < newNodeData._NodesSave.Length; i++)
+    //    {
+    //        newNodeData._NodesSave[i] = tempNodeSaveInfo[i];
+    //    }
+    //    NodeDataContoller.Instance._GamenodeData = newNodeData;
+    //    NodeDataContoller.Instance.SaveData(newNodeData);
+    //    SceneManager.LoadScene("GameStage");
+    //}
 }

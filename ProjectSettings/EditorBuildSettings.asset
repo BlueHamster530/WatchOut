@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/NodeBuild.unity
     guid: 3356083c2f9fac7408a251a83518f46f
+  - enabled: 1
+    path: Assets/Scenes/NodeBuild_Click.unity
+    guid: 3a35f506e798c2b43bf6f2b74a03e67a
   m_configObjects: {}

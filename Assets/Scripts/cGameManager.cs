@@ -47,7 +47,7 @@ public class cGameManager : MonoBehaviour
         {
             for (int ii = 0; ii < MapSize; ii++)
             {
-                WorldTilePosition[i, ii] = new Vector3(-4.785f +(i*1.085f) , -5.3f + ( ii * 1.085f),0);
+                WorldTilePosition[i, ii] = new Vector3(-4.345f + (i * 0.965f) , -4.345f + (ii * 0.965f),0);
                 //Instantiate(maptiletest, WorldTilePosition[i, ii], Quaternion.identity);
             }
         }

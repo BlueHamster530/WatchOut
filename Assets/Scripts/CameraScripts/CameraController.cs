@@ -95,7 +95,7 @@ public class CameraController : MonoBehaviour
     private void ChangeCamShakeAngle()
     {
         if (_type == 0)
-        {
+        {https://www.youtube.com/
             _CurrnetTime += Time.deltaTime * testanglespeedgo;
             Cam.transform.eulerAngles = Vector3.Lerp(_OriginCamAngle, _TargetCamAngle, _CurrnetTime);
             if (_CurrnetTime >= 1.0f)

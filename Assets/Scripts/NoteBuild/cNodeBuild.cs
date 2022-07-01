@@ -53,7 +53,7 @@ public class cNodeBuild : MonoBehaviour
            }
         }
     }
-    private void TypeChange(int num)
+    public void TypeChange(int num)
     {
         nodetype = num;
         DirectionCheck.SetActive(false);
@@ -65,57 +65,6 @@ public class cNodeBuild : MonoBehaviour
         {
             sprite.sprite = TypeImage[nodetype];
             direction = 0;
-            //if (nodetype == 1)
-            //{
-            //    direction = 0;
-            //}
-            //if (nodetype >= 2)
-            //{
-            //    if (direction != 0)
-            //        DirectionCheck.SetActive(true);
-            //}
-        }
-    }
-    private void SetDirection(int num)
-    {
-        if (nodetype == 0) return;
-        direction = num;
-        if (direction >= 5)
-            direction = 0;
-        if (direction == 0)
-            DirectionCheck.SetActive(false);
-        else
-        {
-            if (DirectionCheck.activeSelf == false)
-                DirectionCheck.SetActive(true);
-        }
-        switch (direction)
-        {
-            case 0:
-                {
-                    transform.rotation = Quaternion.Euler(0, 0, 0);
-                }break;
-            case 1://왼쪽
-                {
-                    transform.rotation = Quaternion.Euler(0, 0, 0);
-                }
-                break;
-            case 2://오른쪽
-                {
-                    transform.rotation = Quaternion.Euler(0, 0, 180);
-                }
-                break;
-            case 3://위쪽
-                {
-                    transform.rotation = Quaternion.Euler(0, 0, 270);
-                }
-                break;
-            case 4://아래쪽
-                {
-                    transform.rotation = Quaternion.Euler(0, 0, 90);
-                }
-                break;
-
         }
     }
 

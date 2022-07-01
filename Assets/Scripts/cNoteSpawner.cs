@@ -58,7 +58,7 @@ public class cNoteSpawner : MonoBehaviour
             {
                 for (int ii = 0; ii < MusicNodeTimeLine._NodesSave[i]._Nodes.Length; ii++)
                 {
-                    GameNodeInfo[TimeLable] = new Node((MusicNodeTimeLine._NodesSave[i]._Time / 100.0f)+3.0f,
+                    GameNodeInfo[TimeLable] = new Node((MusicNodeTimeLine._NodesSave[i]._Time / 100.0f)+1.0f,
                         MusicNodeTimeLine._NodesSave[i]._Nodes[ii]._x,
                         MusicNodeTimeLine._NodesSave[i]._Nodes[ii]._y,
                         0,
