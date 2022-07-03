@@ -44,6 +44,9 @@ public class cPlayerController : MonoBehaviour
 
     bool isMulSpeed = false;
     float GoToTime = 0;
+
+    [SerializeField]
+    CameraController cCamController;
     // Start is called before the first frame update
     void Awake()
     {
@@ -121,6 +124,7 @@ public class cPlayerController : MonoBehaviour
     }
     private void HitScore(NodeScoreType _Score)
     {
+        cCamController.VivrateForTime(0.1f);
         nScore += (int)_Score;
         ScoreText.text = nScore.ToString();
         print(_Score);

@@ -1,8 +1,12 @@
+#define IsNodeBuild
+//NodeDataContoller,cNoteSpawner에도존재함
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using UnityEngine.Video;
+
 public class cGameManager : MonoBehaviour
 {
     public static cGameManager instance;
@@ -16,6 +20,9 @@ public class cGameManager : MonoBehaviour
     AudioSource audio;
 
     [SerializeField]
+    VideoPlayer video;
+
+    [SerializeField]
     TextMeshProUGUI PlayTimeText;
     [SerializeField]
     TMP_InputField SetTimeInputField;
@@ -23,14 +30,23 @@ public class cGameManager : MonoBehaviour
     bool IsNodeBuild;
     [SerializeField]
     GameObject NodeBuildTool;
+
+    [SerializeField]
+    bool IsSandBox= false;
     void Awake()
     {
         instance = this;
         audio = GetComponent<AudioSource>();
-        //audio.clip= cGameDataManager.instance.GetStageMusicClip();//일반게임시사용
-        WorldTileInit();
+        if (IsSandBox == false)
+        {
+#if IsDevelop
         audio.clip = cNodeBuildManager.instance.GetSoundClip();//노트빌드때사용
-        Invoke("GameStart", 3.0f);
+#else
+            audio.clip = cGameDataManager.instance.GetStageMusicClip();//일반게임시사용
+#endif
+        }
+        WorldTileInit();
+        Invoke("GameStart", 1.0f);
         isPause = false;
         if (NodeBuildTool.activeSelf == false)
         {
@@ -76,6 +92,7 @@ public class cGameManager : MonoBehaviour
     private void GameStart()
     {
         audio.Play();
+        video.Play();
     }
     public void GamePause()
     {

@@ -33,7 +33,6 @@ public class CameraController : MonoBehaviour
 
     MultipleCamera multiCam;
 
-
     int _IsLeft;
     float _TargetAngle;
     Vector3 _OriginCamAngle;
@@ -74,10 +73,10 @@ public class CameraController : MonoBehaviour
         {
             CloseUpForTime(StartorthographicSize, TargetorthographicSize, TargetOrtSizeTime, ReturnOrtSizeTime);
         }
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            multiCam.CamShowFour();
-        }
+        //if (Input.GetKeyDown(KeyCode.E))
+        //{
+        //    multiCam.CamShowFour();
+        //}
         if (istest == true)
             ChangeCamShakeAngle();
     }
@@ -95,7 +94,7 @@ public class CameraController : MonoBehaviour
     private void ChangeCamShakeAngle()
     {
         if (_type == 0)
-        {https://www.youtube.com/
+        {
             _CurrnetTime += Time.deltaTime * testanglespeedgo;
             Cam.transform.eulerAngles = Vector3.Lerp(_OriginCamAngle, _TargetCamAngle, _CurrnetTime);
             if (_CurrnetTime >= 1.0f)
@@ -128,7 +127,7 @@ public class CameraController : MonoBehaviour
         }
         if (IsOrtSizeChanged == true)
         {
-            CurrentOrtTime += Time.deltaTime * TargetOrtSizeTime;
+            CurrentOrtTime += Time.deltaTime / TargetOrtSizeTime;
             Cam.orthographicSize = Mathf.Lerp(StartorthographicSize, TargetorthographicSize, CurrentOrtTime);
             if (CurrentOrtTime >= 1)
             {

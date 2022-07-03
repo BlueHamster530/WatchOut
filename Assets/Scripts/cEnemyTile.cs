@@ -17,7 +17,7 @@ public class cEnemyTile : MonoBehaviour
     [SerializeField]
     Sprite[] tilesprite;
 
-    public enemyTileType thisType;//0은 타일노드 1은 스파이크노드 2는 레이저
+    public enemyTileType thisType;
     private void Start()
     {
         renderer = GetComponent<SpriteRenderer>();

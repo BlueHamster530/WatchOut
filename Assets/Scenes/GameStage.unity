@@ -3999,6 +3999,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1298231967}
+  - {fileID: 532103418}
   - {fileID: 1525530678}
   m_Father: {fileID: 0}
   m_RootOrder: 2
@@ -9381,10 +9382,12 @@ MonoBehaviour:
   notecontroller: {fileID: 615057245}
   EnemyTiles: []
   isPause: 0
+  video: {fileID: 0}
   PlayTimeText: {fileID: 944161860}
   SetTimeInputField: {fileID: 1987084932}
   IsNodeBuild: 0
   NodeBuildTool: {fileID: 744946067}
+  IsSandBox: 0
 --- !u!82 &519420034
 AudioSource:
   m_ObjectHideFlags: 0
@@ -9493,13 +9496,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17372fc4d6872f441bbc17cfd6ae43b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShakeAmount: 1
-  ShakeAngleAmount: 45
-  testanglespeedgo: 2
-  testanglespeedback: 1
+  ShakeAmount: 0.05
+  ShakeAngleAmount: 1
+  testanglespeedgo: 30
+  testanglespeedback: 50
   StartorthographicSize: 4.3
   TargetorthographicSize: 5.3
-  TargetOrtSizeTime: 10
+  TargetOrtSizeTime: 0.1
   ReturnOrtSizeTime: 0
 --- !u!1 &520592373 stripped
 GameObject:
@@ -9738,6 +9741,73 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a6132b363eb489249b33738684150713, type: 3}
+--- !u!1 &532103417
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 532103418}
+  - component: {fileID: 532103419}
+  m_Layer: 0
+  m_Name: Spectrum
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &532103418
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 532103417}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 221842934}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!328 &532103419
+VideoPlayer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 532103417}
+  m_Enabled: 1
+  m_VideoClip: {fileID: 32900000, guid: bcdcd1fde37b416429b7ea90ea8a2086, type: 3}
+  m_TargetCameraAlpha: 1
+  m_TargetCamera3DLayout: 0
+  m_TargetCamera: {fileID: 0}
+  m_TargetTexture: {fileID: 0}
+  m_TimeReference: 0
+  m_TargetMaterialRenderer: {fileID: 0}
+  m_TargetMaterialProperty: <noninit>
+  m_RenderMode: 2
+  m_AspectRatio: 2
+  m_DataSource: 0
+  m_PlaybackSpeed: 1
+  m_AudioOutputMode: 2
+  m_TargetAudioSources:
+  - {fileID: 0}
+  m_DirectAudioVolumes:
+  - 1
+  m_Url: 
+  m_EnabledAudioTracks: 01
+  m_DirectAudioMutes: 01
+  m_ControlledAudioTrackCount: 1
+  m_PlayOnAwake: 1
+  m_SkipOnDrop: 1
+  m_Looping: 0
+  m_WaitForFirstFrame: 1
+  m_FrameReadyEventEnabled: 0
+  m_VideoShaders: []
 --- !u!1001 &532411157
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -25420,7 +25490,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 221842934}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1525530679
 SpriteRenderer:
@@ -26597,6 +26667,7 @@ MonoBehaviour:
   fDistanceGood: 0.25
   fDistancePerfect: 0.1
   ScoreText: {fileID: 572418869}
+  cCamController: {fileID: 0}
 --- !u!212 &1592307493
 SpriteRenderer:
   m_ObjectHideFlags: 0

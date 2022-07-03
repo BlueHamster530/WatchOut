@@ -17,7 +17,7 @@ public class cGameDataManager : MonoBehaviour
     [SerializeField]
     GameObject test;
     // Start is called before the first frame update
-
+    CamEffectInfo CamEffectNode;
 
     void Awake()
     {
@@ -25,10 +25,26 @@ public class cGameDataManager : MonoBehaviour
         DontDestroyOnLoad(this.gameObject);
     }
 
-    public void SetMusic(AudioClip _clip)
+    public void SetMusic(AudioClip _clip, CamEffectInfo _Camnodes, int _Difficult)
     {
+        CamEffectNode = _Camnodes;
         StageMusicClip = _clip;
-        PathData = Application.streamingAssetsPath + "/NodeBuild/" + StageMusicClip.name + ".mp3.json";
+        string Difficult = "_Normal";
+        switch(_Difficult)
+        {
+            case 0:
+                Difficult = "_Easy";
+                break;
+            case 1:
+                Difficult = "_Normal";
+                break;
+            case 2:
+                Difficult = "_Hard";
+                break;
+        }
+        PathData = Application.streamingAssetsPath + "/NodeBuild/" + StageMusicClip.name + 
+            "/" + StageMusicClip.name+".mp3"+Difficult + ".json";
+
        if (File.Exists(PathData))
        {
            print("Load Done");
@@ -40,6 +56,10 @@ public class cGameDataManager : MonoBehaviour
     public MusicNodeData GetMusicnodeData()
     {
         return StageNodeData;
+    }
+    public CamEffectInfo GetCamEffectNodeData()
+    {
+        return CamEffectNode;
     }
     public AudioClip GetStageMusicClip()
     {

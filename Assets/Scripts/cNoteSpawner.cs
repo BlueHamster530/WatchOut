@@ -1,3 +1,5 @@
+#define IsNodeBuild
+//NodeDataContoller,cGameManager에도존재함
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -41,9 +43,11 @@ public class cNoteSpawner : MonoBehaviour
             enemytilecodes[i] = TileNode[i].GetComponent<cEnemyTile>();
             TileNode[i].SetActive(false);
         }
-
-        //MusicNodeTimeLine = cGameDataManager.instance.GetMusicnodeData();//일반시사용
+#if IsDevelop
         MusicNodeTimeLine = NodeDataContoller.Instance._GamenodeData;//노드빌드시사용
+#else
+        MusicNodeTimeLine = cGameDataManager.instance.GetMusicnodeData();//일반시사용
+#endif
         int NodesLenth = MusicNodeTimeLine._NodesSave.Length;
         for (int i = 0; i < MusicNodeTimeLine._NodesSave.Length; i++)
         {
@@ -69,6 +73,7 @@ public class cNoteSpawner : MonoBehaviour
             }
         }
     }
+   
     public void NoteSpawn(int x, int y, int direction, int type)
     {
          for (int i = 0; i < TileNode.Length; i++)

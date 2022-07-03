@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9dfd5ff95a3475a49b3f31a0ccf07445, type: 3}
+  m_Name: Life_is_Journey
+  m_EditorClassIdentifier: 
+  CamOrhNodes:
+  - EnableTime: 20
+    IsRepeat: 1
+    DisableTimeOnRepeat: 33
+    _Type: 0
+    StartOrtSize: 4.3
+    TargetOrtSize: 5.3
+    TargetOrtSizeTime: 0.1
+    ReturnOrtSizeTime: 0
+  - EnableTime: 35
+    IsRepeat: 1
+    DisableTimeOnRepeat: 77
+    _Type: 0
+    StartOrtSize: 4.3
+    TargetOrtSize: 5.3
+    TargetOrtSizeTime: 0.1
+    ReturnOrtSizeTime: 0
+  - EnableTime: 80
+    IsRepeat: 1
+    DisableTimeOnRepeat: 108
+    _Type: 0
+    StartOrtSize: 4.3
+    TargetOrtSize: 5.3
+    TargetOrtSizeTime: 0.1
+    ReturnOrtSizeTime: 0
+  - EnableTime: 110
+    IsRepeat: 1
+    DisableTimeOnRepeat: 123
+    _Type: 0
+    StartOrtSize: 4.3
+    TargetOrtSize: 5.3
+    TargetOrtSizeTime: 0.1
+    ReturnOrtSizeTime: 0

@@ -15,9 +15,9 @@ public class NodeBuilder_KeyBoard : MonoBehaviour
     Vector3[] vWayPoint = new Vector3[4];
     cNodeBuild nearEnemyTile = new cNodeBuild();
     [SerializeField]
-    cNoteLabs notelabs;
+    public cNoteLabs notelabs;
     bool IsStart;
-    float fStartWaitTime = 3.0f;
+    float fStartWaitTime = 1.0f;
     bool IsAlreadySetNodeType=false;
     [SerializeField]
     GameObject NodeShowPrefab;

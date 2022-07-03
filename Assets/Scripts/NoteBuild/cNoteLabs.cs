@@ -23,7 +23,6 @@ public class cNoteLabs : MonoBehaviour
         public int y;
         public int dir;
     }
-
     public struct TimeInfo
     {
         public NodeInfo[] Nodes;
@@ -134,6 +133,10 @@ public class cNoteLabs : MonoBehaviour
         audio.time += _time;
         LoadNodes();
         audio.Pause();
+    }
+    public float ReturnAudioPlayTime()
+    {
+        return audio.time;
     }
     private void KeyEvent()
     {

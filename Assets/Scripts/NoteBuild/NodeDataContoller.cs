@@ -1,3 +1,5 @@
+#define IsNodeBuild
+//cGameManager에도 존재함.
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -31,8 +33,11 @@ public class NodeDataContoller : MonoBehaviour
     public MusicNodeData _GamenodeData;
     public void LoadData()
     {
-         string file = cNodeBuildManager.instance.GetSoundPath() + ".json";//노트찍기빌드시 사용
-        // string file = cNodeBuildManager.instance.GetSoundPath() + ".json";
+#if IsNodeBuild
+        string file = cNodeBuildManager.instance.GetSoundPath() + ".json";//노트찍기빌드시 사용
+#else
+         string file = cNodeBuildManager.instance.GetSoundPath() + ".json";
+#endif
         if (File.Exists(file))
         {
             print("Load Done");
