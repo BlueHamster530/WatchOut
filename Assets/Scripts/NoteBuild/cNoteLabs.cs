@@ -43,7 +43,7 @@ public class cNoteLabs : MonoBehaviour
     public Vector3[,] WorldTilePosition { get; set; } = new Vector3[10, 10];//0과 9는 여백타일
 
 
-    TimeInfo[] holyshit = new TimeInfo[100000];
+    TimeInfo[] NodeTimeline = new TimeInfo[100000];
 
     [SerializeField]
     private AudioSource audio;
@@ -72,7 +72,7 @@ public class cNoteLabs : MonoBehaviour
     {
         for (int i = 0; i < 100000; i++)
         {
-            holyshit[i].Nodes = new NodeInfo[100];
+            NodeTimeline[i].Nodes = new NodeInfo[100];
         }
         for (int i = 0; i < 10; i++)
         {
@@ -206,13 +206,13 @@ public class cNoteLabs : MonoBehaviour
     public void SaveNodes()
     {
         MusicCurrntPlayTime = Mathf.FloorToInt(audio.time * 100);
-        holyshit[MusicCurrntPlayTime].Nodes = new NodeInfo[100];
-        holyshit[MusicCurrntPlayTime].IsActiveInfo = 0;
+        NodeTimeline[MusicCurrntPlayTime].Nodes = new NodeInfo[100];
+        NodeTimeline[MusicCurrntPlayTime].IsActiveInfo = 0;
         for (int i = 0; i < 100; i++)//맵사이즈변경시 (x*10+)y로 조건 변경
         {
-            holyshit[MusicCurrntPlayTime].Nodes[i] = new NodeInfo(nodebuildcodes[i].nodetype, nodebuildcodes[i].PosX, nodebuildcodes[i].PosY, nodebuildcodes[i].direction);
+            NodeTimeline[MusicCurrntPlayTime].Nodes[i] = new NodeInfo(nodebuildcodes[i].nodetype, nodebuildcodes[i].PosX, nodebuildcodes[i].PosY, nodebuildcodes[i].direction);
             if(nodebuildcodes[i].nodetype>=1)
-                holyshit[MusicCurrntPlayTime].IsActiveInfo = 1;
+                NodeTimeline[MusicCurrntPlayTime].IsActiveInfo = 1;
         }
     }
     public void SaveNodeInPlay()
@@ -221,25 +221,25 @@ public class cNoteLabs : MonoBehaviour
         //MusicCurrntPlayTime -= 200;
         if (MusicCurrntPlayTime <= 0)
             MusicCurrntPlayTime = 0;
-        holyshit[MusicCurrntPlayTime].Nodes = new NodeInfo[100];
-        holyshit[MusicCurrntPlayTime].IsActiveInfo = 0;
+        NodeTimeline[MusicCurrntPlayTime].Nodes = new NodeInfo[100];
+        NodeTimeline[MusicCurrntPlayTime].IsActiveInfo = 0;
         for (int i = 0; i < 100; i++)//맵사이즈변경시 (x*10+)y로 조건 변경
         {
-            holyshit[MusicCurrntPlayTime].Nodes[i] = new NodeInfo(nodebuildcodes[i].nodetype, nodebuildcodes[i].PosX, nodebuildcodes[i].PosY, nodebuildcodes[i].direction);
+            NodeTimeline[MusicCurrntPlayTime].Nodes[i] = new NodeInfo(nodebuildcodes[i].nodetype, nodebuildcodes[i].PosX, nodebuildcodes[i].PosY, nodebuildcodes[i].direction);
         }
-        holyshit[MusicCurrntPlayTime].IsActiveInfo = 1;
+        NodeTimeline[MusicCurrntPlayTime].IsActiveInfo = 1;
         //int musictime = Mathf.FloorToInt(audio.time * 100);
-        //if(holyshit[musictime].IsActiveInfo == 0)
-        //    holyshit[musictime].IsActiveInfo = 1;
-        //holyshit[musictime].Nodes[(_x*10)+ _y] = 
+        //if(NodeTimeline[musictime].IsActiveInfo == 0)
+        //    NodeTimeline[musictime].IsActiveInfo = 1;
+        //NodeTimeline[musictime].Nodes[(_x*10)+ _y] = 
         //    new NodeInfo(_type,_x, _y,0);
     }
     public void LoadNodes()
     {
         MusicCurrntPlayTime = Mathf.FloorToInt(audio.time * 100);
-        for (int i = 0; i < holyshit[MusicCurrntPlayTime].Nodes.Length; i++)//맵사이즈변경시 (x*10+)y로 조건 변경
+        for (int i = 0; i < NodeTimeline[MusicCurrntPlayTime].Nodes.Length; i++)//맵사이즈변경시 (x*10+)y로 조건 변경
         {
-            nodebuildcodes[i].SetNodeInfo(holyshit[MusicCurrntPlayTime].Nodes[i].nodeType, holyshit[MusicCurrntPlayTime].Nodes[i].dir);
+            nodebuildcodes[i].SetNodeInfo(NodeTimeline[MusicCurrntPlayTime].Nodes[i].nodeType, NodeTimeline[MusicCurrntPlayTime].Nodes[i].dir);
         }
 
     }
@@ -284,7 +284,7 @@ public class cNoteLabs : MonoBehaviour
             for (i = MusicCurrntPlayTime; i > 0; i--)
             {
                 if (MusicCurrntPlayTime == i) continue;
-                if (holyshit[i].IsActiveInfo == 1)
+                if (NodeTimeline[i].IsActiveInfo == 1)
                 {
                     break;
                 }
@@ -295,7 +295,7 @@ public class cNoteLabs : MonoBehaviour
             for (i = MusicCurrntPlayTime; i < 100000; i++)
             {
                 if (MusicCurrntPlayTime == i) continue;
-                if (holyshit[i].IsActiveInfo == 1)
+                if (NodeTimeline[i].IsActiveInfo == 1)
                 {
                     isActive = true;
                     break;
@@ -307,7 +307,7 @@ public class cNoteLabs : MonoBehaviour
             return;
         }
         MusicCurrntPlayTime = Mathf.Clamp(i,0,(int)((audio.maxDistance)*100.0f)+1);
-        if (holyshit[MusicCurrntPlayTime].IsActiveInfo == 0)
+        if (NodeTimeline[MusicCurrntPlayTime].IsActiveInfo == 0)
         {
             MusicCurrntPlayTime += 1;
         }
@@ -319,20 +319,20 @@ public class cNoteLabs : MonoBehaviour
         SaveNodes();
         MusicNodeData newNodeData = new MusicNodeData();
         List<NodeSaveInfo> tempNodeSaveInfo = new List<NodeSaveInfo>();
-        for (int i = 0; i < holyshit.Length; i++)
+        for (int i = 0; i < NodeTimeline.Length; i++)
         {
-            if (holyshit[i].IsActiveInfo == 1)
+            if (NodeTimeline[i].IsActiveInfo == 1)
             {
                 List<NodeData> tempNodeData = new List<NodeData>();
-                for (int ii = 0; ii < holyshit[i].Nodes.Length; ii++)
+                for (int ii = 0; ii < NodeTimeline[i].Nodes.Length; ii++)
                 {
-                    if (holyshit[i].Nodes[ii].nodeType != 0)
+                    if (NodeTimeline[i].Nodes[ii].nodeType != 0)
                     {
                         NodeData newJsonNodeData = new NodeData();
-                        newJsonNodeData._nodetype = holyshit[i].Nodes[ii].nodeType;
-                        newJsonNodeData._x = holyshit[i].Nodes[ii].x;
-                        newJsonNodeData._y = holyshit[i].Nodes[ii].y;
-                        newJsonNodeData._dir = holyshit[i].Nodes[ii].dir;
+                        newJsonNodeData._nodetype = NodeTimeline[i].Nodes[ii].nodeType;
+                        newJsonNodeData._x = NodeTimeline[i].Nodes[ii].x;
+                        newJsonNodeData._y = NodeTimeline[i].Nodes[ii].y;
+                        newJsonNodeData._dir = NodeTimeline[i].Nodes[ii].dir;
                         tempNodeData.Add(newJsonNodeData);
                     }
                 }
@@ -362,21 +362,21 @@ public class cNoteLabs : MonoBehaviour
         if (myMusicNodeData._NodesSave == null ) return;
         for (int i = 0; i <  myMusicNodeData._NodesSave.Length; i++)
         {
-            holyshit[myMusicNodeData._NodesSave[i]._Time].IsActiveInfo = 1;
+            NodeTimeline[myMusicNodeData._NodesSave[i]._Time].IsActiveInfo = 1;
 
             for (int ii = 0; ii < myMusicNodeData._NodesSave[i]._Nodes.Length; ii++)
             {
-                holyshit[myMusicNodeData._NodesSave[i]._Time].Nodes[(myMusicNodeData._NodesSave[i]._Nodes[ii]._x * 10) + myMusicNodeData._NodesSave[i]._Nodes[ii]._y].dir =
+                NodeTimeline[myMusicNodeData._NodesSave[i]._Time].Nodes[(myMusicNodeData._NodesSave[i]._Nodes[ii]._x * 10) + myMusicNodeData._NodesSave[i]._Nodes[ii]._y].dir =
                   myMusicNodeData._NodesSave[i]._Nodes[ii]._dir;            
-                holyshit[myMusicNodeData._NodesSave[i]._Time].
+                NodeTimeline[myMusicNodeData._NodesSave[i]._Time].
                     Nodes[(myMusicNodeData._NodesSave[i]._Nodes[ii]._x * 10) +
                     (myMusicNodeData._NodesSave[i]._Nodes[ii]._y)].x =
                   myMusicNodeData._NodesSave[i]._Nodes[ii]._x;
-                holyshit[myMusicNodeData._NodesSave[i]._Time].
+                NodeTimeline[myMusicNodeData._NodesSave[i]._Time].
                     Nodes[(myMusicNodeData._NodesSave[i]._Nodes[ii]._x * 10) +
                     (myMusicNodeData._NodesSave[i]._Nodes[ii]._y)].y =
                   myMusicNodeData._NodesSave[i]._Nodes[ii]._y;
-                holyshit[myMusicNodeData._NodesSave[i]._Time].
+                NodeTimeline[myMusicNodeData._NodesSave[i]._Time].
                     Nodes[(myMusicNodeData._NodesSave[i]._Nodes[ii]._x * 10) +
                     (myMusicNodeData._NodesSave[i]._Nodes[ii]._y)].nodeType =
                   myMusicNodeData._NodesSave[i]._Nodes[ii]._nodetype;
@@ -390,20 +390,20 @@ public class cNoteLabs : MonoBehaviour
     //    SaveNodes();
     //    MusicNodeData newNodeData = new MusicNodeData();
     //    List<NodeSaveInfo> tempNodeSaveInfo = new List<NodeSaveInfo>();
-    //    for (int i = 0; i < holyshit.Length; i++)
+    //    for (int i = 0; i < NodeTimeline.Length; i++)
     //    {
-    //        if (holyshit[i].IsActiveInfo == 1)
+    //        if (NodeTimeline[i].IsActiveInfo == 1)
     //        {
     //            List<NodeData> tempNodeData = new List<NodeData>();
-    //            for (int ii = 0; ii < holyshit[i].Nodes.Length; ii++)
+    //            for (int ii = 0; ii < NodeTimeline[i].Nodes.Length; ii++)
     //            {
-    //                if (holyshit[i].Nodes[ii].nodeType != 0)
+    //                if (NodeTimeline[i].Nodes[ii].nodeType != 0)
     //                {
     //                    NodeData newJsonNodeData = new NodeData();
-    //                    newJsonNodeData._nodetype = holyshit[i].Nodes[ii].nodeType;
-    //                    newJsonNodeData._x = holyshit[i].Nodes[ii].x;
-    //                    newJsonNodeData._y = holyshit[i].Nodes[ii].y;
-    //                    newJsonNodeData._dir = holyshit[i].Nodes[ii].dir;
+    //                    newJsonNodeData._nodetype = NodeTimeline[i].Nodes[ii].nodeType;
+    //                    newJsonNodeData._x = NodeTimeline[i].Nodes[ii].x;
+    //                    newJsonNodeData._y = NodeTimeline[i].Nodes[ii].y;
+    //                    newJsonNodeData._dir = NodeTimeline[i].Nodes[ii].dir;
     //                    tempNodeData.Add(newJsonNodeData);
     //                }
     //            }
